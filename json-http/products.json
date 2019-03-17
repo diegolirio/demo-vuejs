@@ -1,0 +1,16 @@
+{
+    "products": [
+        {
+        "code": "159277",
+        "description": "IPhone 8",
+        "valueUnit": 20.55,
+        "active": true
+        },
+        {
+            "code": "2121",
+            "description": "Teclado",
+            "valueUnit": 120,
+            "active": false
+        }
+    ]
+}

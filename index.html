@@ -1,0 +1,187 @@
+<html>
+    <head>
+        <title>VueJS</title>
+    </head>
+    <body>
+            <div id="app">
+                    {{ message }}
+            </div>       
+          
+            <div id="app-2">
+                <span v-bind:title="message">
+                    Hover your mouse over me for a few seconds
+                    to see my dynamically bound title!
+                </span>
+            </div>
+
+            <div id="app-3">
+                  <span v-if="seen">Now you see me</span>
+            </div>            
+
+            <div id="app-4">
+                <ol>
+                    <li v-for="todo in todos">
+                        {{ todo.text }}
+                    </li>
+                </ol>
+            </div>
+
+            <div id="app-5">
+                <p>{{ message }}</p>
+                <button v-on:click="reverseMessage">Reverse Message</button>
+            </div>            
+
+            <div id="app-6">
+                
+                <p>{{ message }}</p>
+                <input v-model="message">
+                
+                <li v-for="p in products">
+                        {{ p.code }}
+                </li>                
+            </div>      
+            
+            <div id="appJ">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <td>Code</td>
+                            <td>Description</td>
+                            <td>Price</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="p in products">
+                            <td>{{p.code}}</td>
+                            <td>{{p.description}}</td>
+                            <td>{{p.valueUnit}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+            <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                    crossorigin="anonymous"></script>
+            
+            <script>
+                var URL =  "http://localhost:3000/products";
+
+                Vue.component('todo-item', {
+                    template: '<li>Diego</li>'
+                })
+
+                var app7 = new Vue({
+                    el: '#app-7',
+                    data: {
+                        groceryList: [
+                        { id: 0, text: 'Vegetables' },
+                        { id: 1, text: 'Cheese' },
+                        { id: 2, text: 'Whatever else humans are supposed to eat' }
+                        ]
+                    }
+                })                 
+
+                var app = new Vue({
+                    el: '#app',
+                    data: {
+                        message: 'Hello Vue!'
+                    }
+                })            
+
+                var app2 = new Vue({
+                    el: '#app-2',
+                    data: {
+                        message: 'You loaded this page on ' + new Date().toLocaleString()
+                    }
+                })
+
+                var app3 = new Vue({
+                    el: '#app-3',
+                    data: {
+                        seen: true
+                    }
+                })     
+
+                var app4 = new Vue({
+                    el: '#app-4',
+                    data: {
+                        todos: [
+                        { text: 'Learn JavaScript' },
+                        { text: 'Learn Vue' },
+                        { text: 'Build something awesome' }
+                        ]
+                    }
+                })            
+
+                var app5 = new Vue({
+                    el: '#app-5',
+                    data: {
+                        message: 'Hello Vue.js!'
+                    },
+                    methods: {
+                        reverseMessage: function () {
+                          this.message = this.message.split('').reverse().join('')
+                        }
+                    }
+                })                               
+
+                var app6 = new Vue({
+                    el: '#app-6',
+                    data() {
+                        return {
+                            message: 'Its right',
+                            products: null
+                        }
+                    },
+                    mounted () {
+                        axios.get( URL )
+                                .then(response => {
+                                        console.log(response.data);
+                                        this.products = response.data; 
+                                })
+                    }
+                })
+
+
+                var appJ = new Vue({
+                    el: '#appJ',
+                    data() {
+                        return {
+                            products: []
+                        }
+                    },
+                    mounted() {
+                        /*
+                        $.ajax({
+                            url: URL,
+                            success: function(resp) {
+                                this.products = resp;
+                            }
+                        });           
+                        */
+
+                        //$.get( URL ).done( data => {
+                        //    console.log(data);
+                        //    this.products = data;
+                        //})                        
+
+                        $.ajax({
+                            url: URL,
+                            success: (resp => {
+                                console.log(resp);
+                                this.products = resp;                                
+                            })                            
+                        })
+                    }
+                })
+
+            </script>
+
+
+
+
+    </body>
+</html>
